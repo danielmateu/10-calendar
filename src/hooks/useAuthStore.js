@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { calendarApi } from "../api";
-import { onChecking } from "../store";
+import { onChecking, onLogin, onLogout, clearErrorMessage } from "../store";
 
 
 export const useAuthStore = () => {
@@ -19,12 +19,19 @@ export const useAuthStore = () => {
             const {data} = await calendarApi.post('/auth', { email, password });
             // console.log({data});
             localStorage.setItem('token', data.token);
-            localStorage.setItem('token-init-date', new Date().get);
+            localStorage.setItem('token-init-date', new Date().getTime()); // creamos el token en la fecha concreta (actual)
+            dispatch( onLogin({ name: data.name, uid:data.uid  }) );
             
         } catch (error) {
-            console.log(error);
+            // console.log(error);
+            dispatch( onLogout('Credenciales incorrectas') );
+            setTimeout(() => {
+                dispatch(clearErrorMessage())
+            }, 10)
         }
     }
+
+    //startRegister
 
 
     return {
