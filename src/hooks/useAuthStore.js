@@ -10,12 +10,16 @@ export const useAuthStore = () => {
     const dispatch = useDispatch();
 
     const startLogin = async({ email, password }) => {
-        console.log({ email,password });
+
+        // console.log({ email,password });
+
         dispatch( onChecking() );
 
         try {
             const {data} = await calendarApi.post('/auth', { email, password });
-            console.log({data});
+            // console.log({data});
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init-date', new Date().get);
             
         } catch (error) {
             console.log(error);
