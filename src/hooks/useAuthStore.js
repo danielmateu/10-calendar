@@ -6,6 +6,7 @@ import {
     onLogout,
     clearErrorMessage,
     onRegister,
+    onLogOutCalendar,
 } from "../store";
 
 export const useAuthStore = () => {
@@ -77,6 +78,7 @@ export const useAuthStore = () => {
     const startLogout = () => {
         localStorage.clear();
         dispatch(onLogout());
+        dispatch(onLogOutCalendar());
     }
 
     return {
